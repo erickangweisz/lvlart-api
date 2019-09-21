@@ -5,25 +5,28 @@ import User from '../models/user'
 export function signup(req, res) {
     const user = new User()
 
-    if (req.body.password) {
-        bcrypt.hash(req.body.password, null, null, (err, hash) => {
+    if (req.body._password) {
+        bcrypt.hash(req.body._password, null, null, (err, hash) => {
             user.password = hash
         })
-    } else
+    } else {
+        console.log(req.body)
         res.status(200).send({ message: `password is required` })
+    }
 
-    if (!req.body.email || !req.body.username || 
-        !req.body.firstname || !req.body.lastname || 
-        !req.body.category || !req.body.birthday || 
-        !req.body.role) {
+    if (!req.body._email || !req.body._username || 
+        !req.body._firstname || !req.body._lastname || 
+        !req.body._category || !req.body._birthday || 
+        !req.body._role) {
         res.status(500).send({ message: `all fields are required` })
     } else {
-        user.email = req.body.email
-        user.username = req.body.username
-        user.firstname = req.body.firstname
-        user.lastname = req.body.lastname
-        user.category = req.body.category
-        user.birthday = req.body.birthday
+        user.email = req.body._email
+        user.password = req.body._password
+        user.username = req.body._username
+        user.firstname = req.body._firstname
+        user.lastname = req.body._lastname
+        user.category = req.body._category
+        user.birthday = req.body._birthday
         user.signup_date = new Date()
         user.experience = 0
         user.header_file_name = null
@@ -39,7 +42,7 @@ export function signup(req, res) {
         user.twitter_toggle = true
         user.deviantart_toggle = true
         user.is_active = true
-        user.role = req.body.role
+        user.role = req.body._role
 
         user.save((err) => {
             if (err)
