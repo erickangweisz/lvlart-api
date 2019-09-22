@@ -7,8 +7,8 @@ export function createToken(user) {
         sub: user._id,
         email: user.email,
         username: user.username,
-        firstname: user.firstname,
-        lastname: user.lastname,
+        fullname: user.fullname,
+        category: user.category,
         birthday: user.birthday,
         role: user.role,
         iat: moment().unix(), // creation date of the token

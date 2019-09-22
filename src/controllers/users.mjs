@@ -15,18 +15,17 @@ export function signup(req, res) {
     }
 
     if (!req.body._email || !req.body._username || 
-        !req.body._firstname || !req.body._lastname || 
-        !req.body._category || !req.body._birthday || 
-        !req.body._role) {
+        !req.body._fullname || !req.body._category || 
+        !req.body._birthday || !req.body._role) {
         res.status(500).send({ message: `all fields are required` })
     } else {
         user.email = req.body._email
         user.password = req.body._password
         user.username = req.body._username
-        user.firstname = req.body._firstname
-        user.lastname = req.body._lastname
+        user.fullname = req.body._fullname
         user.category = req.body._category
         user.birthday = req.body._birthday
+        user.role = req.body._role
         user.signup_date = new Date()
         user.experience = 0
         user.header_file_name = null
@@ -42,7 +41,6 @@ export function signup(req, res) {
         user.twitter_toggle = true
         user.deviantart_toggle = true
         user.is_active = true
-        user.role = req.body._role
 
         user.save((err) => {
             if (err)
