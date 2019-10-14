@@ -4,7 +4,7 @@
   "description": "lvl-art api",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --experimental-modules index.mjs"
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,7 @@
     "chalk": "^2.4.2",
     "connect-multiparty": "^2.2.0",
     "express": "^4.17.1",
+    "express-validator": "^6.2.0",
     "jwt-simple": "^0.5.6",
     "moment": "^2.24.0",
     "mongoose": "^5.6.9",

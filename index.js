@@ -1,7 +1,7 @@
-import mongoose from 'mongoose'
-import chalk from 'chalk'
-import app from './src/app'
-import config from './src/config.mjs'
+const mongoose = require('mongoose')
+const chalk = require('chalk')
+const app = require('./src/app')
+const config = require('./src/config.js')
 
 const apiIp = config.api.ip
 const apiPort = config.api.port

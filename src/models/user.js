@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const UserSchema = new Schema({
@@ -26,4 +26,4 @@ const UserSchema = new Schema({
     role: { type: String, required: true, enum: ['superadmin', 'admin', 'user'] },
 })
 
-export default mongoose.model('User', UserSchema)
+module.exports = mongoose.model('User', UserSchema)

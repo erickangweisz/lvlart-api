@@ -1,8 +1,8 @@
-import bcrypt from 'bcrypt-nodejs'
-import * as jwt from '../services/jwt'
-import User from '../models/user'
+const bcrypt = require('bcrypt-nodejs')
+const jwt = require('../services/jwt')
+const User = require('../models/user')
 
-export function signup(req, res) {
+function signup(req, res) {
     const user = new User()
 
     if (req.body._password) {
@@ -10,7 +10,6 @@ export function signup(req, res) {
             user.password = hash
         })
     } else {
-        console.log(req.body)
         res.status(200).send({ message: `password is required` })
     }
 
@@ -51,7 +50,7 @@ export function signup(req, res) {
     }
 }
 
-export function login(req, res) {
+function login(req, res) {
     const email = req.body['email']
     const password = req.body['password']
 
@@ -81,7 +80,7 @@ export function login(req, res) {
     }
 }
 
-export function getUsers(req, res) {
+function getUsers(req, res) {
     User.find().exec((err, users) => {
         if (err) 
             res.status(500).send({ message: `request error: ${err}` })
@@ -92,4 +91,10 @@ export function getUsers(req, res) {
                 res.status(200).send({ users: users })
         }
     })
+}
+
+module.exports = {
+    signup,
+    login,
+    getUsers
 }
