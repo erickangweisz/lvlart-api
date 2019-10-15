@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt-nodejs')
 const jwt = require('../services/jwt')
 const User = require('../models/user')
 
-function signup(req, res) {
+function register(req, res) {
     const user = new User()
 
     if (req.body._password) {
@@ -94,7 +94,7 @@ function getUsers(req, res) {
 }
 
 module.exports = {
-    signup,
+    register,
     login,
     getUsers
 }
