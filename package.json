@@ -4,8 +4,10 @@
   "description": "lvl-art api",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
-    "test": "jest"
+    "start-dev": "nodemon index.js",
+    "test": "jest",
+    "migrate:reset": "npx sequelize-cli db:migrate:undo:all && npm run migrate",
+    "pretest": "cross-env NODE_ENV=test npm run migrate:reset"
   },
   "jest": {
     "testEnvironment": "node",
