@@ -1,22 +1,21 @@
 const bcrypt = require('bcrypt-nodejs')
 const jwt = require('../services/jwt')
 const User = require('../models/user')
-var validator = require('../middlewares/validator')
+const validator = require('../middlewares/validator')
 
 function register(req, res) {
     const user = new User()
 
     if (req.body._password) {
-        if (!validator.lengthGreaterThan6(req.body._password)) {
+        if (!validator.lengthGreaterThan6(req.body._password))
             return res.status(400).send({ message: `password must be more that 6 characters` })
-        }
         
         bcrypt.hash(req.body._password, null, null, (err, hash) => {
             user.password = hash
         })
-    } else {
-        res.status(200).send({ message: `password is required` })
     }
+    else
+        res.status(200).send({ message: `password is required` })
 
     if (!req.body._email || !req.body._username || 
         !req.body._fullname || !req.body._category || 
