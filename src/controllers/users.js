@@ -1,11 +1,13 @@
 const bcrypt = require('bcrypt-nodejs')
 const jwt = require('../services/jwt')
 const User = require('../models/user')
+var validator = require('validator')
 
 function register(req, res) {
     const user = new User()
 
-    if (req.body._password) {
+    if (req.body._password && 
+        validator.isLength({ min: 3 })) {
         bcrypt.hash(req.body._password, null, null, (err, hash) => {
             user.password = hash
         })
