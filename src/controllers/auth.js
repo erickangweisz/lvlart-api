@@ -42,35 +42,17 @@ function register(req, res) {
 
 function login(req, res) {
     authValidator.loginValidator(req, res, () => {
-        //console.log(req)
-    })
-    /*const email = req.body['email']
-    const password = req.body['password']
+        const email = req.body['email'].toLowerCase().trim()
 
-    if (email && password) {
-        User.findOne({ email: email.toLowerCase().trim() }, (err, user) => {
-            if (err)
-                res.status(500).send({ message: `Server error: ${err}` })
-            else {
-                if (!user)
-                    res.status(404).send({ message: `email doesn't exist` })
-                else {
-                    bcrypt.compare(password, user.password, (err, check) => {
-                        if (check) {
-                            res.status(200).send({
-                                token: jwt.createToken(user),
-                                user: user
-                            })
-                        } else {
-                            res.status(404).send({ message: `Password error` })
-                        }
-                    })
-                }
-            }
+        User.findOne({ email: email.toLowerCase().trim() }, (loginErr, user) => {
+            if (loginErr)
+                res.status(500).send({ message: `Error: ${loginErr}` })
+            
+            res.status(200).send({
+                token: jwt.createToken(user)
+            })
         })
-    } else {
-        res.status(500).send({ message: `email and password required to login` })
-    }*/
+    })
 }
 
 module.exports = {
