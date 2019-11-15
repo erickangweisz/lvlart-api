@@ -1,6 +1,4 @@
-const jwt = require('../services/jwt')
 const User = require('../models/user')
-const userValidator = require('../middlewares/auth_validator')
 
 function getUsers(req, res) {
     User.find().exec((err, users) => {
