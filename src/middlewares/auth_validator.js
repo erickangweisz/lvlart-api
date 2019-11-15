@@ -1,7 +1,7 @@
 const validator = require('validator')
 const bcrypt = require('bcrypt-nodejs')
 
-const userValidator = {
+const authValidator = {
     registerValidator,
     loginValidator
 }
@@ -34,4 +34,4 @@ function loginValidator(req, res, next) {
     console.log(email + ' - ' + password)
 }
 
-module.exports = userValidator
+module.exports = authValidator
