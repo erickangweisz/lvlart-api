@@ -1,61 +1,50 @@
-const bcrypt = require('bcrypt-nodejs')
 const jwt = require('../services/jwt')
 const User = require('../models/user')
-const validator = require('../middlewares/validator')
+const userValidator = require('../middlewares/user_validator')
 
 function register(req, res) {
-    const user = new User()
+    const user = new User({
+        email: req.body._email,
+        username: req.body._username,
+        fullname: req.body._fullname,
+        category: req.body._category,
+        birthday: req.body._birthday,
+        role: req.body._role,
+        signup_date: new Date(),
+        experience: 0,
+        header_file_name: null,
+        avatar_file_name: null,
+        status_text: null,
+        visits_number: 0,
+        victories_number: 0,
+        defeats_number: 0,
+        link_to_facebook: null,
+        link_to_twitter: null,
+        link_to_deviantart: null,
+        facebook_toggle: true,
+        twitter_toggle: true,
+        deviantart_toggle: true,
+        is_active: true
+    })
 
-    if (req.body._password) {
-        if (!validator.lengthGreaterThan6(req.body._password))
-            return res.status(400).send({ message: `password must be more that 6 characters` })
-        
-        bcrypt.hash(req.body._password, null, null, (err, hash) => {
-            user.password = hash
-        })
-    }
-    else
-        res.status(200).send({ message: `password is required` })
+    userValidator.registerValidator(req, res, () => {
+        let passwordHashed = res.locals.hash
+        user.password = passwordHashed
 
-    if (!req.body._email || !req.body._username || 
-        !req.body._fullname || !req.body._category || 
-        !req.body._birthday || !req.body._role) {
-        res.status(500).send({ message: `all fields are required` })
-    } else {
-        user.email = req.body._email
-        user.password = req.body._password
-        user.username = req.body._username
-        user.fullname = req.body._fullname
-        user.category = req.body._category
-        user.birthday = req.body._birthday
-        user.role = req.body._role
-        user.signup_date = new Date()
-        user.experience = 0
-        user.header_file_name = null
-        user.avatar_file_name = null
-        user.status_text = null
-        user.visits_number = 0
-        user.victories_number = 0
-        user.defeats_number = 0
-        user.link_to_facebook = null
-        user.link_to_twitter = null
-        user.link_to_deviantart = null
-        user.facebook_toggle = true
-        user.twitter_toggle = true
-        user.deviantart_toggle = true
-        user.is_active = true
-
-        user.save((err) => {
-            if (err)
-                res.status(500).send({ message: `Error: ${err}` })
+        user.save((saveErr, savedUser) => {
+            if (saveErr)
+                res.status(500).send({ message: `Error: ${saveErr}` })
             
-            res.status(201).send({ token: jwt.createToken(user) })
+            res.status(201).send({ token: jwt.createToken(savedUser) })
         })
-    }
+    })
 }
 
 function login(req, res) {
-    const email = req.body['email']
+    userValidator.loginValidator(req, res, () => {
+        //console.log(req)
+    })
+    /*const email = req.body['email']
     const password = req.body['password']
 
     if (email && password) {
@@ -81,7 +70,7 @@ function login(req, res) {
         })
     } else {
         res.status(500).send({ message: `email and password required to login` })
-    }
+    }*/
 }
 
 function getUsers(req, res) {

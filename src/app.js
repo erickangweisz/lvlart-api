@@ -3,7 +3,6 @@ const config_http_headers = require('./middlewares/config_http_headers')
 const server_files = require('./services/server_files')
 const bodyParser = require('body-parser')
 const routes = require('./routes')
-
 const app = express()
 
 app.use(express.json())
