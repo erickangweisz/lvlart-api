@@ -9,22 +9,7 @@ function register(req, res) {
         fullname: req.body._fullname,
         category: req.body._category,
         birthday: req.body._birthday,
-        role: req.body._role,
-        signup_date: new Date(),
-        experience: 0,
-        header_file_name: null,
-        avatar_file_name: null,
-        status_text: null,
-        visits_number: 0,
-        victories_number: 0,
-        defeats_number: 0,
-        link_to_facebook: null,
-        link_to_twitter: null,
-        link_to_deviantart: null,
-        facebook_toggle: true,
-        twitter_toggle: true,
-        deviantart_toggle: true,
-        is_active: true
+        role: req.body._role
     })
 
     authValidator.registerValidator(req, res, () => {
